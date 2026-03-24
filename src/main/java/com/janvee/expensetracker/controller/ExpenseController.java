@@ -28,4 +28,16 @@ public class ExpenseController {
     public void deleteExpenseByID(@PathVariable Long id){
         expenseService.deleteExpense(id);
     }
+    @PutMapping("/expenses/{id}")
+    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
+        return expenseService.updateExpense(id, expense);
+    }
+    @GetMapping("/expenses/category/{category}")
+    public List<Expense> getExpensesByCategory(@PathVariable String category) {
+        return expenseService.getExpensesByCategory(category);
+    }
+    @GetMapping("/expenses/total")
+    public double getTotalExpenses() {
+        return expenseService.getTotalExpenses();
+    }
 }

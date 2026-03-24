@@ -33,4 +33,29 @@ public class ExpenseServiceImpl implements ExpenseService {
     public void deleteExpense(Long id) {
         expenseRepository.deleteById(id);
     }
+    public Expense updateExpense(Long id, Expense expense) {
+        Expense existingExpense = expenseRepository.findById(id).orElse(null);
+        if(existingExpense != null) {
+            existingExpense.setCategory(expense.getCategory());
+            existingExpense.setAmount(expense.getAmount());
+            return expenseRepository.save(existingExpense);
+        }
+        return null;
+    }
+    public List<Expense> getExpensesByCategory(String category) {
+        return expenseRepository.findByCategory(category);
+    }
+    @Override
+    public double getTotalExpenses() {
+
+        List<Expense> expenses = expenseRepository.findAll();
+
+        double total = 0;
+
+        for (Expense expense : expenses) {
+            total += expense.getAmount();
+        }
+
+        return total;
+    }
 }
