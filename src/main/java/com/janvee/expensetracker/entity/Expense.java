@@ -1,5 +1,7 @@
 package com.janvee.expensetracker.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,8 +12,13 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String title;
+
+    @Positive
     private double amount;
+
+    @NotBlank
     private String category;
 
     public Expense() {}
