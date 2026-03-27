@@ -4,7 +4,10 @@
     import com.janvee.expensetracker.service.ExpenseService;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.web.bind.annotation.*;
-
+    import org.springframework.data.domain.Page;
+    import org.springframework.data.domain.PageRequest;
+    import org.springframework.data.domain.Pageable;
+    import org.springframework.data.domain.Sort;
     import java.util.List;
 
     @RestController
@@ -16,10 +19,14 @@
             return expenseService.saveExpense(expense);
         }
         @GetMapping("/expenses")
-        public List<Expense> getAllExpenses() {
-            return expenseService.getAllExpenses();
+        public Page<Expense> getAllExpenses(
+                @RequestParam(defaultValue = "0") int page,
+                @RequestParam(defaultValue = "5") int size,
+                @RequestParam(defaultValue = "id") String sortBy
+        ) {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+            return expenseService.getAllExpenses(pageable);
         }
-    //    get expense by ID:
         @GetMapping("/expenses/{id}")
         public Expense getExpenseById(@PathVariable Long id){
             return expenseService.getExpenseById(id);
@@ -40,4 +47,5 @@
         public double getTotalExpenses() {
             return expenseService.getTotalExpenses();
         }
+
     }
