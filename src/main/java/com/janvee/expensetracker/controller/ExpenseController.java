@@ -1,4 +1,5 @@
     package com.janvee.expensetracker.controller;
+    import com.janvee.expensetracker.dto.ExpenseDTO;
     import jakarta.validation.Valid;
     import com.janvee.expensetracker.entity.Expense;
     import com.janvee.expensetracker.service.ExpenseService;
@@ -19,7 +20,7 @@
             return expenseService.saveExpense(expense);
         }
         @GetMapping("/expenses")
-        public Page<Expense> getAllExpenses(
+        public Page<ExpenseDTO> getAllExpenses(
                 @RequestParam(defaultValue = "0") int page,
                 @RequestParam(defaultValue = "5") int size,
                 @RequestParam(defaultValue = "id") String sortBy

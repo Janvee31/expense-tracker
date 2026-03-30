@@ -1,5 +1,6 @@
 package com.janvee.expensetracker.service;
 
+import com.janvee.expensetracker.dto.ExpenseDTO;
 import com.janvee.expensetracker.entity.Expense;
 import com.janvee.expensetracker.exception.ExpenseNotFoundException;
 import com.janvee.expensetracker.repository.ExpenseRepository;
@@ -49,7 +50,14 @@ public class ExpenseServiceImpl implements ExpenseService {
         return total;
     }
     @Override
-    public Page<Expense> getAllExpenses(Pageable pageable) {
-        return expenseRepository.findAll(pageable);
+    public Page<ExpenseDTO> getAllExpenses(Pageable pageable) {
+        return expenseRepository.findAll(pageable).map(this::mapToDTO);
+    }
+    private ExpenseDTO mapToDTO(Expense expense) {
+        ExpenseDTO dto = new ExpenseDTO();
+        dto.setId(expense.getId());
+        dto.setCategory(expense.getCategory());
+        dto.setAmount(expense.getAmount());
+        return dto;
     }
 }
