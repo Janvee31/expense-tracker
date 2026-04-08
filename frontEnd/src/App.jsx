@@ -1,11 +1,19 @@
 import { motion } from "framer-motion";
-import {Plus, Eye, Wallet, User, TrendingUp, PiggyBank, } from "lucide-react";
+import { Plus, Eye, Wallet, User, TrendingUp, PiggyBank } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function App() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  const [formData, setFormData] = useState({
+    amount: "",
+    category: "",
+    date: ""
+  });
+
   useEffect(() => {
     axios.get("http://localhost:8080/expenses")
         .then(res => {
@@ -17,17 +25,48 @@ export default function App() {
           setLoading(false);
         });
   }, []);
+
+  const handleAddExpense = async () => {
+    if (!formData.amount || !formData.category) {
+      alert("Please fill all required fields");
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+          "http://localhost:8080/expenses",
+          {
+            amount: Number(formData.amount),
+            category: formData.category,
+            date: formData.date || null
+          }
+      );
+
+      setExpenses((prev) => [res.data, ...prev]);
+
+      setFormData({
+        amount: "",
+        category: "",
+        date: ""
+      });
+
+      setShowModal(false);
+    } catch (error) {
+      alert("Error adding expense");
+    }
+  };
+
   const totalExpenses = expenses.reduce(
       (sum, item) => sum + (item.amount || 0),
       0
   );
+
   const totalIncome = 8000;
   const totalSavings = totalIncome - totalExpenses;
 
   return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
 
-        {/* 🔹 NAVBAR */}
         <nav className="bg-white/80 backdrop-blur-xl shadow-sm p-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-2 rounded-xl">
@@ -38,10 +77,8 @@ export default function App() {
           <User />
         </nav>
 
-        {/* 🔹 MAIN */}
         <div className="p-8 space-y-8">
 
-          {/* 🔥 CARDS */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             <motion.div whileHover={{ scale: 1.05 }}>
@@ -67,25 +104,31 @@ export default function App() {
                 <h2 className="text-2xl font-bold">₹{totalSavings}</h2>
               </div>
             </motion.div>
+
           </div>
 
-          {/* 🔥 BUTTONS */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-            <button className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl transition">
+            <button
+                onClick={() => setShowModal(true)}
+                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl transition"
+            >
               <Plus />
               Add Expense
             </button>
+
             <button className="flex items-center justify-center gap-2 border p-4 rounded-xl hover:bg-gray-100 transition">
               <Eye />
               View Expenses
             </button>
+
           </div>
+
           <div className="bg-white p-6 rounded-xl shadow">
             <h2 className="text-xl font-bold mb-4">Recent Transactions</h2>
 
             {loading ? (
-                <p>Loading...</p>
+                <p className="text-gray-400">Loading transactions...</p>
             ) : expenses.length === 0 ? (
                 <p>No Expenses Found</p>
             ) : (
@@ -102,7 +145,7 @@ export default function App() {
                       </div>
 
                       <p className="text-red-500 font-semibold">
-                        ₹{item.amount.toLocaleString()}
+                        ₹{(item.amount || 0).toLocaleString()}
                       </p>
                     </motion.div>
                 ))
@@ -110,6 +153,66 @@ export default function App() {
           </div>
 
         </div>
+
+        {showModal && (
+            <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+              <div className="bg-white p-6 rounded-2xl w-96 shadow-lg">
+
+                <h2 className="text-xl font-semibold mb-4">Add Expense</h2>
+
+                <input
+                    type="number"
+                    placeholder="Amount"
+                    value={formData.amount}
+                    onChange={(e) =>
+                        setFormData({ ...formData, amount: e.target.value })
+                    }
+                    className="w-full mb-3 p-2 border rounded"
+                />
+
+                <select
+                    value={formData.category}
+                    onChange={(e) =>
+                        setFormData({ ...formData, category: e.target.value })
+                    }
+                    className="w-full mb-3 p-2 border rounded"
+                >
+                  <option value="">Select Category</option>
+                  <option value="Food">Food</option>
+                  <option value="Travel">Travel</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Miscellaneous">Miscellaneous</option>
+                </select>
+
+                <input
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) =>
+                        setFormData({ ...formData, date: e.target.value })
+                    }
+                    className="w-full mb-4 p-2 border rounded"
+                />
+
+                <div className="flex justify-end gap-2">
+                  <button
+                      onClick={() => setShowModal(false)}
+                      className="px-3 py-1 border rounded"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                      onClick={handleAddExpense}
+                      className="px-4 py-1 bg-blue-600 text-white rounded"
+                  >
+                    Submit
+                  </button>
+                </div>
+
+              </div>
+            </div>
+        )}
+
       </div>
   );
 }
