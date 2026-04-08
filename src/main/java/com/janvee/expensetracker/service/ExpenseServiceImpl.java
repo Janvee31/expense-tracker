@@ -1,5 +1,4 @@
 package com.janvee.expensetracker.service;
-
 import com.janvee.expensetracker.dto.ExpenseDTO;
 import com.janvee.expensetracker.entity.Expense;
 import com.janvee.expensetracker.exception.ExpenseNotFoundException;
@@ -32,8 +31,11 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense existingExpense = expenseRepository.findById(id)
                 .orElseThrow(() ->
                         new ExpenseNotFoundException("Expense not found with id " + id));
+
         existingExpense.setCategory(expense.getCategory());
         existingExpense.setAmount(expense.getAmount());
+        existingExpense.setDate(expense.getDate()); // ✅ ADD THIS
+
         return expenseRepository.save(existingExpense);
     }
     @Override
@@ -58,6 +60,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         dto.setId(expense.getId());
         dto.setCategory(expense.getCategory());
         dto.setAmount(expense.getAmount());
+        dto.setDate(expense.getDate());
         return dto;
     }
 }
