@@ -11,6 +11,7 @@
     import org.springframework.data.domain.Sort;
     import java.util.List;
 
+    @CrossOrigin(origins = "*")
     @RestController
     public class ExpenseController {
         @Autowired
