@@ -4,10 +4,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function App() {
-
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     axios.get("http://localhost:8080/expenses")
         .then(res => {
@@ -96,14 +94,15 @@ export default function App() {
                         key={item.id || index}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex justify-between border-b py-3"
+                        className="flex justify-between border-b py-3 hover:bg-gray-50 px-2 rounded-lg transition"
                     >
                       <div>
-                        <p className="font-semibold">{item.category}</p>
+                        <p className="font-semibold capitalize">{item.category}</p>
+                        <p className="text-sm text-gray-400">Expense</p>
                       </div>
 
                       <p className="text-red-500 font-semibold">
-                        ₹{item.amount}
+                        ₹{item.amount.toLocaleString()}
                       </p>
                     </motion.div>
                 ))
