@@ -7,6 +7,7 @@ export default function App() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [editId, setEditId] = useState(null);
 
   const [formData, setFormData] = useState({
     amount: "",
@@ -33,16 +34,42 @@ export default function App() {
     }
 
     try {
-      const res = await axios.post(
-          "http://localhost:8080/expenses",
-          {
-            amount: Number(formData.amount),
-            category: formData.category,
-            date: formData.date || null
-          }
-      );
+      let res;
 
-      setExpenses((prev) => [res.data, ...prev]);
+      if (editId) {
+        res = await axios.put(
+            `http://localhost:8080/expenses/${editId}`,
+            {
+              amount: Number(formData.amount),
+              category: formData.category,
+              date: formData.date || null
+            }
+        );
+
+        setExpenses((prev) =>
+            prev.map((item) =>
+                item.id === editId
+                    ? {
+                      ...item,
+                      amount: Number(formData.amount),
+                      category: formData.category,
+                      date: formData.date
+                    }
+                    : item
+            )
+        );
+      } else {
+        res = await axios.post(
+            "http://localhost:8080/expenses",
+            {
+              amount: Number(formData.amount),
+              category: formData.category,
+              date: formData.date || null
+            }
+        );
+
+        setExpenses((prev) => [res.data, ...prev]);
+      }
 
       setFormData({
         amount: "",
@@ -50,10 +77,32 @@ export default function App() {
         date: ""
       });
 
+      setEditId(null);
       setShowModal(false);
+
     } catch (error) {
-      alert("Error adding expense");
+      alert("Error saving expense");
     }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/expenses/${id}`);
+      setExpenses((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      alert("Error deleting expense");
+    }
+  };
+
+  const handleEdit = (item) => {
+    setFormData({
+      amount: item.amount,
+      category: item.category,
+      date: item.date ? item.date.split("T")[0] : ""
+    });
+
+    setEditId(item.id);
+    setShowModal(true);
   };
 
   const totalExpenses = expenses.reduce(
@@ -110,7 +159,11 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             <button
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                  setShowModal(true);
+                  setEditId(null);
+                  setFormData({ amount: "", category: "", date: "" });
+                }}
                 className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl transition"
             >
               <Plus />
@@ -137,16 +190,32 @@ export default function App() {
                         key={item.id || index}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex justify-between border-b py-3 hover:bg-gray-50 px-2 rounded-lg transition"
+                        className="flex justify-between items-center border-b py-3 hover:bg-gray-50 px-2 rounded-lg transition"
                     >
                       <div>
                         <p className="font-semibold capitalize">{item.category}</p>
                         <p className="text-sm text-gray-400">Expense</p>
                       </div>
 
-                      <p className="text-red-500 font-semibold">
-                        ₹{(item.amount || 0).toLocaleString()}
-                      </p>
+                      <div className="flex items-center gap-3">
+                        <p className="text-red-500 font-semibold">
+                          ₹{(item.amount || 0).toLocaleString()}
+                        </p>
+
+                        <button
+                            onClick={() => handleEdit(item)}
+                            className="text-blue-500 hover:text-blue-700"
+                        >
+                          ✏️
+                        </button>
+
+                        <button
+                            onClick={() => handleDelete(item.id)}
+                            className="text-red-500 hover:text-red-700"
+                        >
+                          🗑️
+                        </button>
+                      </div>
                     </motion.div>
                 ))
             )}
@@ -158,7 +227,9 @@ export default function App() {
             <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
               <div className="bg-white p-6 rounded-2xl w-96 shadow-lg">
 
-                <h2 className="text-xl font-semibold mb-4">Add Expense</h2>
+                <h2 className="text-xl font-semibold mb-4">
+                  {editId ? "Edit Expense" : "Add Expense"}
+                </h2>
 
                 <input
                     type="number"
@@ -205,7 +276,7 @@ export default function App() {
                       onClick={handleAddExpense}
                       className="px-4 py-1 bg-blue-600 text-white rounded"
                   >
-                    Submit
+                    {editId ? "Update" : "Submit"}
                   </button>
                 </div>
 
