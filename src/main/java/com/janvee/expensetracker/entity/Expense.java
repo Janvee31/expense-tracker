@@ -19,43 +19,30 @@ public class Expense {
     @NotBlank
     private String category;
 
-    private LocalDate date; // optional but useful (you already use it in frontend)
+    private LocalDate date;
+
+    // 🔥 ADD THIS
+    private String userEmail;
 
     public Expense() {}
 
-    public Expense(double amount, String category, LocalDate date) {
+    public Expense(double amount, String category, LocalDate date, String userEmail) {
         this.amount = amount;
         this.category = category;
         this.date = date;
+        this.userEmail = userEmail;
     }
 
     // Getters
-    public Long getId() {
-        return id;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
+    public Long getId() { return id; }
+    public double getAmount() { return amount; }
+    public String getCategory() { return category; }
+    public LocalDate getDate() { return date; }
+    public String getUserEmail() { return userEmail; }
 
     // Setters
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    public void setAmount(double amount) { this.amount = amount; }
+    public void setCategory(String category) { this.category = category; }
+    public void setDate(LocalDate date) { this.date = date; }
+    public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
 }
