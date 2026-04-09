@@ -2,15 +2,17 @@ import Sidebar from "./Sidebar";
 
 export default function Layout({ children }) {
     return (
-        <div className="flex">
+        <div className="flex bg-gray-100 min-h-screen">
 
-            {/* Left Sidebar */}
+            {/* Sidebar */}
             <Sidebar />
 
             {/* Main Content */}
-            <div className="ml-64 w-full min-h-screen bg-gray-50 p-6">
-                {children}
-            </div>
+            <main className="flex-1 p-6">
+                <div className="max-w-6xl mx-auto">
+                    {children}
+                </div>
+            </main>
 
         </div>
     );

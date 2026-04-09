@@ -75,6 +75,17 @@
 			<version>1.18.30</version> <!-- Use latest version -->
 			<scope>provided</scope>
 		</dependency>
+		<!-- pom.xml -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 
 	</dependencies>
 

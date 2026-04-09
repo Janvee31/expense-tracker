@@ -1,53 +1,44 @@
-    package com.janvee.expensetracker.controller;
-    import com.janvee.expensetracker.dto.ExpenseDTO;
-    import jakarta.validation.Valid;
-    import com.janvee.expensetracker.entity.Expense;
-    import com.janvee.expensetracker.service.ExpenseService;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.web.bind.annotation.*;
-    import org.springframework.data.domain.Page;
-    import org.springframework.data.domain.PageRequest;
-    import org.springframework.data.domain.Pageable;
-    import org.springframework.data.domain.Sort;
-    import java.util.List;
+package com.janvee.expensetracker.controller;
 
-    @CrossOrigin(origins = "*")
-    @RestController
-    public class ExpenseController {
-        @Autowired
-        private ExpenseService expenseService;
-        @PostMapping("/expenses")
-        public Expense addExpense(@Valid @RequestBody Expense expense){
-            return expenseService.saveExpense(expense);
-        }
-        @GetMapping("/expenses")
-        public Page<ExpenseDTO> getAllExpenses(
-                @RequestParam(defaultValue = "0") int page,
-                @RequestParam(defaultValue = "5") int size,
-                @RequestParam(defaultValue = "id") String sortBy
-        ) {
-            Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-            return expenseService.getAllExpenses(pageable);
-        }
-        @GetMapping("/expenses/{id}")
-        public Expense getExpenseById(@PathVariable Long id){
-            return expenseService.getExpenseById(id);
-        }
-        @DeleteMapping("/expenses/{id}")
-        public void deleteExpenseByID(@PathVariable Long id){
-            expenseService.deleteExpense(id);
-        }
-        @PutMapping("/expenses/{id}")
-        public Expense updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
-            return expenseService.updateExpense(id, expense);
-        }
-        @GetMapping("/expenses/category/{category}")
-        public List<Expense> getExpensesByCategory(@PathVariable String category) {
-            return expenseService.getExpensesByCategory(category);
-        }
-        @GetMapping("/expenses/total")
-        public double getTotalExpenses() {
-            return expenseService.getTotalExpenses();
-        }
+import com.janvee.expensetracker.entity.Expense;
+import com.janvee.expensetracker.repository.ExpenseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RestController
+@RequestMapping("/expenses")
+@CrossOrigin(origins = "http://localhost:5173")
+public class ExpenseController {
+
+    @Autowired
+    private ExpenseRepository expenseRepository;
+
+    @GetMapping
+    public List<Expense> getExpenses() {
+        return expenseRepository.findAll();
     }
+
+    @PostMapping
+    public Expense addExpense(@RequestBody Expense expense) {
+        return expenseRepository.save(expense);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteExpense(@PathVariable Long id) {
+        expenseRepository.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense updatedExpense) {
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Expense not found"));
+
+        expense.setAmount(updatedExpense.getAmount());
+        expense.setCategory(updatedExpense.getCategory());
+        expense.setDate(updatedExpense.getDate());
+
+        return expenseRepository.save(expense);
+    }
+}
