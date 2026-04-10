@@ -271,8 +271,7 @@ export default function Expenses() {
 
             {/* VIEW EXPENSES MODAL */}
             {showViewModal && (
-                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white p-6 rounded-xl w-full max-w-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4"><div className="bg-white p-6 rounded-xl w-full max-w-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
 
                         <h2 className="font-bold text-xl mb-4 text-gray-800">
                             All Expenses
