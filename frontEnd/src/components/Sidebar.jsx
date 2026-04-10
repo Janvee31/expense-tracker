@@ -48,8 +48,19 @@ export default function Sidebar() {
             </div>
 
             {/* FOOTER */}
-            <div className="absolute bottom-5 text-xs text-gray-400">
-                © 2026 Expense Tracker
+            <div className="absolute bottom-5 left-5 right-5">
+                <button
+                    onClick={() => {
+                        localStorage.removeItem("token");
+                        window.location.href = "/login";
+                    }}
+                    className="w-full flex items-center justify-center gap-2 mb-4 bg-red-50 text-red-600 hover:bg-red-100 py-3 rounded-xl transition-colors font-medium text-sm"
+                >
+                    🚪 Logout
+                </button>
+                <div className="text-xs text-center text-gray-400">
+                    © 2026 Expense Tracker
+                </div>
             </div>
 
         </div>
