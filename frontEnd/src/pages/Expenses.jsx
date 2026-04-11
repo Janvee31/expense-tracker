@@ -149,180 +149,276 @@ export default function Expenses() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <p className="text-gray-500 text-lg">Loading Expenses...</p>
+            <div className="min-h-screen flex items-center justify-center animate-pulse text-indigo-400 text-lg">
+                Loading Expenses...
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-2">
-            <div className="max-w-6xl mx-auto space-y-10">
-                {/* HEADER */}
-                <div>
-                    <h1 className="text-4xl font-bold">💰 Expenses Dashboard</h1>
-                    <p className="text-gray-500">Track your spending</p>
-                </div>
-
-                {/* CARDS */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <motion.div className="bg-white/70 p-6 rounded-2xl shadow-lg">
-                        <Wallet className="text-indigo-600 mb-2" />
-                        <h2 className="text-3xl font-bold">₹{displayTotal}</h2>
-                        <p className="text-gray-500 text-sm">Total Expenses</p>
-                    </motion.div>
-                    <motion.div className="bg-white/70 p-6 rounded-2xl shadow-lg">
-                        <TrendingUp className="text-green-600 mb-2" />
-                        <h2 className="text-3xl font-bold">₹{displayIncome}</h2>
-                        <p className="text-gray-500 text-sm">Monthly Income</p>
-                    </motion.div>
-                    <motion.div className="bg-white/70 p-6 rounded-2xl shadow-lg">
-                        <PiggyBank className="text-purple-600 mb-2" />
-                        <h2 className="text-3xl font-bold">₹{displaySavings}</h2>
-                        <p className="text-gray-500 text-sm">Total Savings</p>
-                    </motion.div>
-                </div>
-
-                {/* BUTTONS */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <button
-                        onClick={() => setShowAddModal(true)}
-                        className="bg-indigo-600 text-white p-4 rounded-xl hover:scale-105 transition shadow-md"
-                    >
-                        <Plus className="inline mr-2" />
-                        Add Expense
-                    </button>
-                    <button
-                        onClick={() => setShowViewModal(true)}
-                        className="bg-white/70 p-4 rounded-xl border hover:bg-white transition shadow-sm"
-                    >
-                        <Eye className="inline mr-2" />
-                        View Expenses
-                    </button>
-                </div>
-
-                {/* LIST */}
-                <div className="bg-white/70 backdrop-blur-xl p-6 rounded-2xl shadow-lg">
-                    <h2 className="text-xl font-bold mb-4 text-indigo-900">Recent Expenses</h2>
-                    {expenses.length === 0 ? (
-                        <p className="text-gray-400 text-center py-4">No expenses found.</p>
-                    ) : (
-                        expenses.slice(0, 6).map((item) => (
-                            <div key={item.id} className="flex justify-between items-center border-b py-3 last:border-0">
-                                <div>
-                                    <p className="font-medium text-gray-800">{item.category}</p>
-                                    <p className="text-xs text-gray-500">{formatDate(item.date)}</p>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <span className="font-bold text-indigo-700">₹{item.amount}</span>
-                                    <button onClick={() => handleEditClick(item)} className="text-blue-500 hover:text-blue-700 transition">
-                                        <Edit size={18} />
-                                    </button>
-                                    <button onClick={() => handleDelete(item.id)} className="text-red-400 hover:text-red-600 transition">
-                                        <Trash2 size={18} />
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                    )}
-                </div>
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 p-2">
+            
+            {/* HEADER */}
+            <div className="mb-10">
+                <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                    Expenses
+                </h1>
+                <p className="text-cyan-400 text-lg mt-1 font-medium tracking-wide">
+                    Manage your spending
+                </p>
             </div>
 
+            {/* CARDS */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div whileHover={{ y: -5 }} className="relative overflow-hidden backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -mr-10 -mt-10 transition-all group-hover:bg-indigo-500/20" />
+                    <div className="flex justify-between items-center relative z-10">
+                        <div className="p-3 bg-indigo-500/20 rounded-2xl">
+                            <Wallet className="text-indigo-400" size={24} />
+                        </div>
+                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Expenses</span>
+                    </div>
+                    <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">₹{displayTotal}</h2>
+                    <p className="text-slate-400 text-sm mt-2 relative z-10">Total spend</p>
+                </motion.div>
+                
+                <motion.div whileHover={{ y: -5 }} className="relative overflow-hidden backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-10 -mt-10 transition-all group-hover:bg-emerald-500/20" />
+                    <div className="flex justify-between items-center relative z-10">
+                        <div className="p-3 bg-emerald-500/20 rounded-2xl">
+                            <TrendingUp className="text-emerald-400" size={24} />
+                        </div>
+                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Income</span>
+                    </div>
+                    <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">₹{displayIncome}</h2>
+                    <p className="text-slate-400 text-sm mt-2 relative z-10">Monthly income</p>
+                </motion.div>
+                
+                <motion.div whileHover={{ y: -5 }} className="relative overflow-hidden backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 transition-all group-hover:bg-purple-500/20" />
+                    <div className="flex justify-between items-center relative z-10">
+                        <div className="p-3 bg-purple-500/20 rounded-2xl">
+                            <PiggyBank className="text-purple-400" size={24} />
+                        </div>
+                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Savings</span>
+                    </div>
+                    <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">₹{displaySavings}</h2>
+                    <p className="text-slate-400 text-sm mt-2 relative z-10">Total savings</p>
+                </motion.div>
+            </div>
+
+            {/* BUTTONS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <button
+                    onClick={() => setShowAddModal(true)}
+                    className="w-full bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-400 hover:to-cyan-400 text-slate-950 font-bold py-4 px-6 rounded-2xl shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all flex items-center justify-center group"
+                >
+                    <Plus className="mr-2 group-hover:rotate-90 transition-transform" />
+                    Add Expense
+                </button>
+                <button
+                    onClick={() => setShowViewModal(true)}
+                    className="w-full bg-slate-800/50 border border-slate-700 hover:bg-slate-800 text-slate-100 font-medium py-4 px-6 rounded-2xl shadow-lg transition-all flex items-center justify-center group"
+                >
+                    <Eye className="mr-2 text-cyan-400 group-hover:scale-110 transition-transform" />
+                    View All Expenses
+                </button>
+            </div>
+
+            {/* LIST */}
+            <div className="backdrop-blur-xl bg-slate-900/60 border border-slate-700/50 p-8 rounded-3xl shadow-xl mt-8">
+                <h2 className="text-2xl font-bold mb-6 text-slate-100 flex items-center gap-2">
+                    <span className="text-cyan-400">📋</span> Recent Expenses
+                </h2>
+                {expenses.length === 0 ? (
+                    <div className="text-center py-10 bg-slate-800/30 rounded-2xl border border-dashed border-slate-700">
+                        <p className="text-slate-500">No expenses found.</p>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {expenses.slice(0, 6).map((item, i) => (
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                                key={item.id} 
+                                className="flex justify-between items-center p-4 bg-slate-800/40 rounded-2xl hover:bg-slate-800/70 transition-colors border border-slate-700/30 group"
+                            >
+                                <div className="flex flex-col">
+                                    <p className="font-semibold text-slate-200 text-lg">{item.category}</p>
+                                    <p className="text-sm text-slate-500">{formatDate(item.date)}</p>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <span className="font-bold text-slate-100 text-xl bg-slate-900/50 px-4 py-2 rounded-xl border border-slate-700">₹{item.amount}</span>
+                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                                        <button onClick={() => handleEditClick(item)} className="p-2 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 hover:text-indigo-300 rounded-lg transition-colors">
+                                            <Edit size={18} />
+                                        </button>
+                                        <button onClick={() => handleDelete(item.id)} className="p-2 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 hover:text-rose-300 rounded-lg transition-colors">
+                                            <Trash2 size={18} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* ADD / EDIT / VIEW MODALS */}
             {/* ADD MODAL */}
             {showAddModal && (
-                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white p-6 rounded-xl w-full max-w-sm shadow-2xl">
-                        <h2 className="font-bold text-xl mb-4 text-gray-800">Add Expense</h2>
-                        <select
-                            className="border w-full p-2 mb-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-                            value={newExpense.category}
-                            onChange={(e) => setNewExpense({ ...newExpense, category: e.target.value })}
-                        >
-                            <option value="">Select Category</option>
-                            <option value="Food">Food</option>
-                            <option value="Travel">Travel</option>
-                            <option value="Shopping">Shopping</option>
-                            <option value="Bills">Bills</option>
-                            <option value="Entertainment">Entertainment</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <input
-                            type="number"
-                            placeholder="Amount"
-                            className="border w-full p-2 mb-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-                            value={newExpense.amount}
-                            onChange={(e) => setNewExpense({ ...newExpense, amount: e.target.value })}
-                        />
-                        <input
-                            type="date"
-                            className="border w-full p-2 mb-4 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-                            value={newExpense.date}
-                            onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
-                        />
-                        <button onClick={handleAddExpense} className="bg-indigo-600 text-white w-full p-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                            Save Expense
-                        </button>
-                        <button onClick={() => setShowAddModal(false)} className="mt-3 w-full text-gray-500 hover:text-gray-700 transition">
-                            Cancel
-                        </button>
-                    </div>
+                <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-slate-900 border border-slate-700 p-8 rounded-3xl w-full max-w-sm shadow-2xl">
+                        <h2 className="font-black text-2xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Add Expense</h2>
+                        
+                        <div className="space-y-4">
+                            <select
+                                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors"
+                                value={newExpense.category}
+                                onChange={(e) => setNewExpense({ ...newExpense, category: e.target.value })}
+                            >
+                                <option value="">Select Category</option>
+                                <option value="Food">Food</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input
+                                type="number"
+                                placeholder="Amount"
+                                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                                value={newExpense.amount}
+                                onChange={(e) => setNewExpense({ ...newExpense, amount: e.target.value })}
+                            />
+                            <input
+                                type="date"
+                                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors [color-scheme:dark]"
+                                value={newExpense.date}
+                                onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-3 mt-8">
+                            <button onClick={handleAddExpense} className="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-bold p-3.5 rounded-xl transition-colors">
+                                Save Expense
+                            </button>
+                            <button onClick={() => setShowAddModal(false)} className="w-full text-slate-400 hover:text-slate-200 p-3.5 rounded-xl transition-colors">
+                                Cancel
+                            </button>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+
+            {/* EDIT MODAL */}
+            {showEditModal && (
+                <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-slate-900 border border-slate-700 p-8 rounded-3xl w-full max-w-sm shadow-2xl">
+                        <h2 className="font-black text-2xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">Edit Expense</h2>
+                        
+                        <div className="space-y-4">
+                            <select
+                                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-slate-200 focus:outline-none focus:border-cyan-500 transition-colors"
+                                value={editExpense.category}
+                                onChange={(e) => setEditExpense({ ...editExpense, category: e.target.value })}
+                            >
+                                <option value="">Select Category</option>
+                                <option value="Food">Food</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input
+                                type="number"
+                                placeholder="Amount"
+                                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
+                                value={editExpense.amount}
+                                onChange={(e) => setEditExpense({ ...editExpense, amount: e.target.value })}
+                            />
+                            <input
+                                type="date"
+                                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3.5 text-slate-200 focus:outline-none focus:border-cyan-500 transition-colors [color-scheme:dark]"
+                                value={editExpense.date}
+                                onChange={(e) => setEditExpense({ ...editExpense, date: e.target.value })}
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-3 mt-8">
+                            <button onClick={handleUpdateExpense} className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold p-3.5 rounded-xl transition-colors">
+                                Update Expense
+                            </button>
+                            <button onClick={() => setShowEditModal(false)} className="w-full text-slate-400 hover:text-slate-200 p-3.5 rounded-xl transition-colors">
+                                Cancel
+                            </button>
+                        </div>
+                    </motion.div>
                 </div>
             )}
 
             {/* VIEW EXPENSES MODAL */}
             {showViewModal && (
-                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4"><div className="bg-white p-6 rounded-xl w-full max-w-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
-
-                        <h2 className="font-bold text-xl mb-4 text-gray-800">
+                <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-slate-900 border border-slate-700 p-8 rounded-3xl w-full max-w-2xl shadow-2xl max-h-[85vh] flex flex-col">
+                        <h2 className="font-bold text-2xl mb-6 text-slate-100">
                             All Expenses
                         </h2>
 
-                        {expenses.length === 0 ? (
-                            <p className="text-gray-400 text-center">No expenses found.</p>
-                        ) : (
-                            expenses.map((item) => (
-                                <div
-                                    key={item.id}
-                                    className="flex justify-between items-center border-b py-3 last:border-0"
-                                >
-                                    <div>
-                                        <p className="font-medium">{item.category}</p>
-                                        <p className="text-xs text-gray-500">
-                                            {formatDate(item.date)}
-                                        </p>
+                        <div className="overflow-y-auto pr-2 flex-col space-y-3">
+                            {expenses.length === 0 ? (
+                                <p className="text-slate-500 text-center py-6">No expenses found.</p>
+                            ) : (
+                                expenses.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="flex justify-between items-center p-4 bg-slate-800/40 rounded-2xl border border-slate-700/30 group"
+                                    >
+                                        <div>
+                                            <p className="font-medium text-slate-200">{item.category}</p>
+                                            <p className="text-xs text-slate-500">
+                                                {formatDate(item.date)}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex items-center gap-4">
+                                            <span className="font-bold text-slate-100 bg-slate-900/50 px-3 py-1 rounded-lg border border-slate-700">
+                                                ₹{item.amount}
+                                            </span>
+
+                                            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button
+                                                    onClick={() => handleEditClick(item)}
+                                                    className="p-1.5 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 active:scale-95 rounded-lg transition-all"
+                                                >
+                                                    <Edit size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(item.id)}
+                                                    className="p-1.5 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 active:scale-95 rounded-lg transition-all"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <div className="flex items-center gap-4">
-                            <span className="font-bold text-indigo-700">
-                                ₹{item.amount}
-                            </span>
-
-                                        <button
-                                            onClick={() => handleEditClick(item)}
-                                            className="text-blue-500"
-                                        >
-                                            <Edit size={18} />
-                                        </button>
-
-                                        <button
-                                            onClick={() => handleDelete(item.id)}
-                                            className="text-red-500"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))
-                        )}
+                                ))
+                            )}
+                        </div>
 
                         {/* CLOSE BUTTON */}
-                        <button
-                            onClick={() => setShowViewModal(false)}
-                            className="mt-4 w-full text-gray-600 hover:text-black"
-                        >
-                            Close
-                        </button>
-                    </div>
+                        <div className="mt-8 pt-4 border-t border-slate-800">
+                            <button
+                                onClick={() => setShowViewModal(false)}
+                                className="w-full p-4 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition-colors font-medium"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </motion.div>
                 </div>
             )}
         </div>
