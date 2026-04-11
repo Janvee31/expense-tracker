@@ -85,75 +85,94 @@ export default function Categories() {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-[60vh]">
-                <p className="text-gray-500">Loading categories...</p>
+                <div className="animate-pulse text-indigo-400 text-lg font-medium tracking-wide">
+                    Loading Categories...
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-50 to-white">
+        <div className="space-y-8 p-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
-            <div className="max-w-6xl mx-auto space-y-8">
+            {/* HEADER */}
+            <div className="mb-10">
+                <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                    Categories
+                </h1>
+                <p className="text-cyan-400 text-lg mt-1 font-medium tracking-wide">
+                    Where your money goes
+                </p>
+            </div>
 
-                {/* HEADER */}
-                <div>
-                    <h1 className="text-3xl font-bold">📂 Categories Overview</h1>
-                    <p className="text-gray-500">Where your money goes</p>
-                </div>
-
-                {/* TOTAL CARD */}
-                <div className="bg-white/70 p-6 rounded-2xl shadow">
-                    <p className="text-gray-500">Total Spending</p>
-                    <h2 className="text-3xl font-bold text-indigo-600">
+            {/* TOTAL CARD */}
+            <motion.div whileHover={{ y: -5 }} className="relative overflow-hidden backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] group max-w-sm">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -mr-10 -mt-10 transition-all group-hover:bg-indigo-500/20" />
+                <div className="relative z-10">
+                    <p className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-2">Total Categorized Spending</p>
+                    <h2 className="text-5xl font-black text-indigo-400">
                         ₹{totalSpent}
                     </h2>
                 </div>
+            </motion.div>
 
-                {/* CATEGORY GRID */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {/* CATEGORY GRID */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
 
-                    {categoryData.map((cat, i) => {
+                {categoryData.length === 0 ? (
+                    <div className="col-span-full text-center py-10 bg-slate-800/30 rounded-3xl border border-dashed border-slate-700">
+                        <p className="text-slate-500">No categories recorded yet.</p>
+                    </div>
+                ) : categoryData.map((cat, i) => {
 
-                        const percentage = totalSpent === 0
-                            ? 0
-                            : ((cat.total / totalSpent) * 100).toFixed(1);
+                    const percentage = totalSpent === 0
+                        ? 0
+                        : ((cat.total / totalSpent) * 100).toFixed(1);
 
-                        return (
-                            <motion.div
-                                key={i}
-                                whileHover={{ scale: 1.05 }}
-                                className="p-5 rounded-2xl shadow bg-white/80 backdrop-blur"
-                                style={{
-                                    borderLeft: `6px solid ${categoryColors[cat.name] || "#6366f1"}`
-                                }}
-                            >
+                    return (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: i * 0.1 }}
+                            whileHover={{ y: -5 }}
+                            className="relative overflow-hidden p-6 rounded-3xl shadow-lg backdrop-blur-xl bg-slate-900/60 border border-slate-700/50 group"
+                        >
+                            <div 
+                                className="absolute top-0 left-0 w-2 h-full opacity-80"
+                                style={{ backgroundColor: categoryColors[cat.name] || "#6366f1" }} 
+                            />
+                            
+                            {/* Ambient Glow matching category color */}
+                            <div 
+                                className="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-[40px] opacity-10 transition-opacity group-hover:opacity-20 pointer-events-none"
+                                style={{ backgroundColor: categoryColors[cat.name] || "#6366f1" }}
+                            />
 
-                                <div className="flex justify-between items-center">
-                                    <h2 className="text-lg font-semibold">
-                                        {cat.name}
-                                    </h2>
+                            <div className="flex justify-between items-start mb-6 relative z-10 pl-2">
+                                <h2 className="text-xl font-bold text-slate-200">
+                                    {cat.name}
+                                </h2>
 
-                                    <span
-                                        className="text-sm px-2 py-1 rounded"
-                                        style={{
-                                            backgroundColor: categoryColors[cat.name] || "#6366f1",
-                                            color: "#fff"
-                                        }}
-                                    >
-                                        {percentage}%
-                                    </span>
-                                </div>
+                                <span
+                                    className="text-xs font-bold px-3 py-1 rounded-full shadow-inner border border-white/10"
+                                    style={{
+                                        backgroundColor: categoryColors[cat.name] || "#6366f1",
+                                        color: "#fff"
+                                    }}
+                                >
+                                    {percentage}%
+                                </span>
+                            </div>
 
-                                {/* 🔥 ANIMATED VALUE */}
-                                <p className="text-2xl font-bold mt-3 text-indigo-600">
-                                    ₹{displayTotals[cat.name] || 0}
-                                </p>
+                            {/* 🔥 ANIMATED VALUE */}
+                            <p className="text-4xl font-black mt-2 text-slate-100 relative z-10 pl-2">
+                                ₹{displayTotals[cat.name] || 0}
+                            </p>
 
-                            </motion.div>
-                        );
-                    })}
-
-                </div>
+                        </motion.div>
+                    );
+                })}
 
             </div>
 
