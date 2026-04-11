@@ -14,7 +14,8 @@ export default function Categories() {
     useEffect(() => {
         axios.get("http://localhost:8080/expenses")
             .then(res => {
-                setExpenses(res.data.content || res.data || []);
+                const allData = res.data.content || res.data || [];
+                setExpenses(allData.filter(e => e.type !== 'INCOME'));
                 setLoading(false);
             })
             .catch(() => setLoading(false));
