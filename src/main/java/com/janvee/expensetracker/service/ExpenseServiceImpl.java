@@ -47,7 +47,11 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<Expense> expenses = expenseRepository.findAll();
         double total = 0;
         for (Expense expense : expenses) {
-            total += expense.getAmount();
+            if ("INCOME".equals(expense.getType())) {
+                total += expense.getAmount();
+            } else {
+                total -= expense.getAmount();
+            }
         }
         return total;
     }
