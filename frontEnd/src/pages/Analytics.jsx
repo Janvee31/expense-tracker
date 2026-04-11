@@ -39,7 +39,8 @@ This is a rule-based system (not real AI).`,
     useEffect(() => {
         axios.get("http://localhost:8080/expenses")
             .then((res) => {
-                setExpenses(res.data.content || res.data || []);
+                const allData = res.data.content || res.data || [];
+                setExpenses(allData.filter(e => e.type !== 'INCOME'));
             })
             .finally(() => setLoading(false));
     }, []);

@@ -33,6 +33,9 @@ public class ExpenseController {
     @PostMapping
     public Expense addExpense(@RequestBody Expense expense) {
         expense.setUserEmail(getLoggedInEmail());
+        if (expense.getType() == null || expense.getType().isEmpty()) {
+            expense.setType("EXPENSE");
+        }
         return expenseRepository.save(expense);
     }
 
@@ -59,6 +62,11 @@ public class ExpenseController {
         expense.setAmount(updatedExpense.getAmount());
         expense.setCategory(updatedExpense.getCategory());
         expense.setDate(updatedExpense.getDate());
+        
+        if (updatedExpense.getType() != null && !updatedExpense.getType().isEmpty()) {
+            expense.setType(updatedExpense.getType());
+        }
+
         // Do not update the user email!
 
         return expenseRepository.save(expense);

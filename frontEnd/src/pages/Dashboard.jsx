@@ -21,14 +21,23 @@ export default function Dashboard() {
             });
     }, []);
 
-    const totalExpense = expenses.reduce(
+    const expenseOnly = expenses.filter(e => e.type !== 'INCOME');
+
+    const totalExpense = expenseOnly.reduce(
         (sum, item) => sum + (item.amount || 0),
         0
     );
 
-    const thisMonthExpense = totalExpense; // (you can refine later)
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    
+    const thisMonthExpense = expenseOnly.filter(e => {
+        if (!e.date) return false;
+        const d = new Date(e.date);
+        return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+    }).reduce((sum, item) => sum + (item.amount || 0), 0);
 
-    const categoryMap = expenses.reduce((acc, curr) => {
+    const categoryMap = expenseOnly.reduce((acc, curr) => {
         acc[curr.category] = (acc[curr.category] || 0) + (curr.amount || 0);
         return acc;
     }, {});
@@ -38,7 +47,7 @@ export default function Dashboard() {
         ""
     ) : "N/A";
 
-    const recentExpenses = expenses.slice(0, 5);
+    const recentExpenses = [...expenses].reverse().slice(0, 5);
 
     const AnimatedNumber = ({ value }) => {
         const [display, setDisplay] = useState(0);
@@ -195,8 +204,8 @@ export default function Dashboard() {
                                     </div>
                                 </div>
 
-                                <span className="font-bold text-slate-100 text-xl bg-slate-900/50 px-4 py-2 rounded-xl border border-slate-700">
-                                    ₹{exp.amount}
+                                <span className={`font-bold text-xl bg-slate-900/50 px-4 py-2 rounded-xl border border-slate-700 ${exp.type === 'INCOME' ? 'text-emerald-400' : 'text-slate-100'}`}>
+                                    {exp.type === 'INCOME' ? '+' : '-'}₹{exp.amount}
                                 </span>
                             </motion.div>
                         ))}
