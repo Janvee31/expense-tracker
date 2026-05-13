@@ -9,6 +9,7 @@ import Analytics from "./pages/Analytics";
 import Categories from "./pages/Categories";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ChatAI from "./pages/ChatAI";
 
 // A wrapper for protected routes
 const ProtectedRoute = ({ children }) => {
@@ -33,6 +34,7 @@ export default function App() {
                 <Route path="/expenses" element={<ProtectedRoute><Layout><Expenses /></Layout></ProtectedRoute>} />
                 <Route path="/analytics" element={<ProtectedRoute><Layout><Analytics /></Layout></ProtectedRoute>} />
                 <Route path="/categories" element={<ProtectedRoute><Layout><Categories /></Layout></ProtectedRoute>} />
+                <Route path="/chat" element={<ProtectedRoute><Layout><ChatAI /></Layout></ProtectedRoute>} />
 
             </Routes>
         </BrowserRouter>

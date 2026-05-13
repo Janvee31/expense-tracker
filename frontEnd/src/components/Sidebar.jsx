@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
-import { LogOut, LayoutDashboard, Receipt, BarChart3, Tags } from "lucide-react";
+import { LogOut, LayoutDashboard, Receipt, BarChart3, Tags, Sparkles } from "lucide-react";
 
 export default function Sidebar() {
     const navItems = [
         { name: "Dashboard", path: "/", icon: LayoutDashboard },
         { name: "Expenses", path: "/expenses", icon: Receipt },
         { name: "Analytics", path: "/analytics", icon: BarChart3 },
-        { name: "Categories", path: "/categories", icon: Tags }
+        { name: "Categories", path: "/categories", icon: Tags },
+        { name: "AI Assistant", path: "/chat", icon: Sparkles }
     ];
 
     return (
