@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LogOut, LayoutDashboard, Receipt, BarChart3, Tags, Sparkles } from "lucide-react";
+import { LogOut, LayoutDashboard, Receipt, BarChart3, Tags, Sparkles, Users, Percent } from "lucide-react";
 
 export default function Sidebar() {
     const navItems = [
@@ -7,7 +7,9 @@ export default function Sidebar() {
         { name: "Expenses", path: "/expenses", icon: Receipt },
         { name: "Analytics", path: "/analytics", icon: BarChart3 },
         { name: "Categories", path: "/categories", icon: Tags },
-        { name: "AI Assistant", path: "/chat", icon: Sparkles }
+        { name: "AI Assistant", path: "/chat", icon: Sparkles },
+        { name: "Family Group", path: "/family", icon: Users },
+        { name: "Hisab", path: "/hisab", icon: Percent }
     ];
 
     return (

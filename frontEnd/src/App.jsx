@@ -10,6 +10,8 @@ import Categories from "./pages/Categories";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ChatAI from "./pages/ChatAI";
+import Family from "./pages/Family";
+import Hisab from "./pages/Hisab";
 
 // A wrapper for protected routes
 const ProtectedRoute = ({ children }) => {
@@ -35,6 +37,8 @@ export default function App() {
                 <Route path="/analytics" element={<ProtectedRoute><Layout><Analytics /></Layout></ProtectedRoute>} />
                 <Route path="/categories" element={<ProtectedRoute><Layout><Categories /></Layout></ProtectedRoute>} />
                 <Route path="/chat" element={<ProtectedRoute><Layout><ChatAI /></Layout></ProtectedRoute>} />
+                <Route path="/family" element={<ProtectedRoute><Layout><Family /></Layout></ProtectedRoute>} />
+                <Route path="/hisab" element={<ProtectedRoute><Layout><Hisab /></Layout></ProtectedRoute>} />
 
             </Routes>
         </BrowserRouter>

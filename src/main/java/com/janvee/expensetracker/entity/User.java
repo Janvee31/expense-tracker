@@ -14,6 +14,17 @@ public class User {
     private String email;
     private String password;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_family_groups",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "family_group_id")
+    )
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private java.util.List<FamilyGroup> familyGroups = new java.util.ArrayList<>();
+
+    private String profileIcon = "👤";
+
     public User() {}
 
     public User(String email, String password) {
@@ -34,6 +45,14 @@ public class User {
         return password;
     }
 
+    public java.util.List<FamilyGroup> getFamilyGroups() {
+        return familyGroups;
+    }
+
+    public String getProfileIcon() {
+        return profileIcon;
+    }
+
     // Setters
     public void setEmail(String email) {
         this.email = email;
@@ -41,5 +60,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setFamilyGroups(java.util.List<FamilyGroup> familyGroups) {
+        this.familyGroups = familyGroups;
+    }
+
+    public void setProfileIcon(String profileIcon) {
+        this.profileIcon = profileIcon;
     }
 }

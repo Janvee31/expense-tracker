@@ -17,13 +17,17 @@ axios.interceptors.request.use(
     }
 );
 
-// We can also add a response interceptor to handle 401 Unauthorized errors gracefully
+// We can also add a response interceptor to handle 401/403 errors gracefully
 axios.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response && error.response.status === 401) {
-            localStorage.removeItem("token");
-            window.location.href = "/login";
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            const requestUrl = error.config?.url || "";
+            if (!requestUrl.includes("/auth/")) {
+                console.warn("Redirecting to /login due to failed request to:", requestUrl, "status:", error.response.status);
+                localStorage.removeItem("token");
+                window.location.href = "/login";
+            }
         }
         return Promise.reject(error);
     }
