@@ -1,3 +1,261 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Premium Pastel UI Theme Overrides */
+body, html, #root {
+  background-color: #fafbfc !important;
+  color: #2d3748 !important;
+}
+
+/* Backgrounds & Panels */
+.bg-slate-950 {
+  background-color: #fafbfc !important;
+}
+.bg-slate-900 {
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+}
+.bg-slate-950\/40 {
+  background-color: rgba(248, 250, 252, 0.5) !important;
+}
+.bg-slate-950\/60 {
+  background-color: rgba(248, 250, 252, 0.7) !important;
+}
+.bg-slate-900\/10 {
+  background-color: rgba(241, 245, 249, 0.4) !important;
+}
+.bg-slate-900\/30 {
+  background-color: rgba(241, 245, 249, 0.6) !important;
+}
+.bg-slate-900\/40 {
+  background-color: #ffffff !important;
+  border: 1px solid #f1f5f9 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01) !important;
+}
+.bg-slate-900\/50 {
+  background-color: #ffffff !important;
+}
+.bg-slate-900\/60 {
+  background-color: #ffffff !important;
+}
+.bg-slate-900\/70 {
+  background-color: #ffffff !important;
+}
+.bg-slate-800\/30 {
+  background-color: #fafbfc !important;
+}
+.bg-slate-800\/50 {
+  background-color: #f8fafc !important;
+}
+.bg-slate-800\/80 {
+  background-color: #f8fafc !important;
+}
+.bg-slate-800 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Borders */
+.border-slate-800 {
+  border-color: #f1f5f9 !important;
+}
+.border-slate-700 {
+  border-color: #e2e8f0 !important;
+}
+.border-slate-700\/50 {
+  border-color: #f1f5f9 !important;
+}
+.border-slate-750 {
+  border-color: #e2e8f0 !important;
+}
+.border-slate-850 {
+  border-color: #f1f5f9 !important;
+}
+.divide-slate-850 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #f1f5f9 !important;
+}
+
+/* Typography */
+.text-slate-100 {
+  color: #1a202c !important; /* Soft title black */
+}
+.text-slate-200 {
+  color: #2d3748 !important; /* Soft body black */
+}
+.text-slate-300 {
+  color: #4a5568 !important; /* Charcoal gray */
+}
+.text-slate-350 {
+  color: #4a5568 !important;
+}
+.text-slate-400 {
+  color: #718096 !important; /* Muted cool slate gray */
+}
+.text-slate-550 {
+  color: #718096 !important;
+}
+.text-slate-500 {
+  color: #a0aec0 !important;
+}
+
+/* Pastel Periwinkle/Lavender (replacing Indigo) */
+.text-indigo-400 {
+  color: #6366f1 !important;
+}
+.bg-indigo-500\/10 {
+  background-color: #eef2ff !important;
+}
+.bg-indigo-500\/20 {
+  background-color: #e0e7ff !important;
+}
+.border-indigo-500\/20 {
+  border-color: #c7d2fe !important;
+}
+.border-indigo-500\/30 {
+  border-color: #c7d2fe !important;
+}
+.bg-indigo-500 {
+  background-color: #e0e7ff !important;
+  color: #312e81 !important; /* Dark indigo text for contrast */
+  font-weight: 700 !important;
+  border: 1px solid #c7d2fe !important;
+}
+.hover\:bg-indigo-650:hover, .bg-indigo-500:hover {
+  background-color: #c7d2fe !important;
+  color: #312e81 !important;
+}
+
+/* Pastel Sky Blue (replacing Cyan) */
+.text-cyan-400 {
+  color: #0284c7 !important;
+}
+.text-cyan-300 {
+  color: #0369a1 !important;
+}
+.bg-cyan-500\/20 {
+  background-color: #e0f2fe !important;
+}
+.bg-cyan-500\/10 {
+  background-color: #f0f9ff !important;
+}
+.border-cyan-500\/20 {
+  border-color: #bae6fd !important;
+}
+.border-cyan-500\/30 {
+  border-color: #bae6fd !important;
+}
+.bg-cyan-500 {
+  background-color: #e0f2fe !important;
+  color: #0369a1 !important; /* Dark blue text */
+  font-weight: 700 !important;
+  border: 1px solid #bae6fd !important;
+}
+.hover\:bg-cyan-650:hover, .bg-cyan-500:hover {
+  background-color: #bae6fd !important;
+  color: #0369a1 !important;
+}
+
+/* Pastel Mint Green (replacing Emerald) */
+.text-emerald-450, .text-emerald-400 {
+  color: #047857 !important;
+}
+.bg-emerald-500\/10 {
+  background-color: #ecfdf5 !important;
+}
+.bg-emerald-500\/20 {
+  background-color: #d1fae5 !important;
+}
+.border-emerald-500\/10, .border-emerald-500\/20 {
+  border-color: #a7f3d0 !important;
+}
+.bg-emerald-500 {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  font-weight: 700 !important;
+  border: 1px solid #a7f3d0 !important;
+}
+
+/* Pastel Blush Rose (replacing Red/Rose) */
+.text-rose-450, .text-rose-400 {
+  color: #be123c !important;
+}
+.bg-rose-500\/5 {
+  background-color: #fff1f2 !important;
+}
+.bg-rose-500\/10 {
+  background-color: #fff1f2 !important;
+}
+.bg-rose-500\/20 {
+  background-color: #ffe4e6 !important;
+}
+.border-rose-500\/10, .border-rose-500\/20 {
+  border-color: #fecdd3 !important;
+}
+
+/* Pastel Lemon Gold (replacing Amber/Yellow) */
+.text-amber-400 {
+  color: #a21caf !important; /* Soft magenta/peach */
+}
+.bg-amber-500\/10 {
+  background-color: #fdf2f8 !important;
+}
+.bg-amber-500\/20 {
+  background-color: #fbcfe8 !important;
+}
+.border-amber-500\/20 {
+  border-color: #fbcfe8 !important;
+}
+
+/* Ambient glows - set to soft warm peach and lavender */
+.bg-indigo-600\/10 {
+  background-color: rgba(224, 231, 255, 0.2) !important;
+}
+.bg-cyan-600\/10 {
+  background-color: rgba(224, 242, 254, 0.2) !important;
+}
+
+/* Input Boxes and Forms */
+input, select {
+  background-color: #ffffff !important;
+  color: #2d3748 !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.01) !important;
+}
+input::placeholder {
+  color: #a0aec0 !important;
+}
+form.bg-slate-900\/50 {
+  background-color: #ffffff !important;
+  border: 1px solid #f1f5f9 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Side navigation active states */
+.active {
+  background-color: #e0e7ff !important;
+  color: #312e81 !important;
+  border: 1px solid #c7d2fe !important;
+}
+
+/* Force all headings and section titles to be bold black */
+h1, h2, h3, h4, h5, h6,
+.font-black, .font-extrabold, .font-bold {
+  color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+/* Turn transparent gradient text headers into solid bold black */
+.text-transparent,
+[class*="text-transparent"],
+.bg-clip-text {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-image: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+}
+
+/* Fix text colors inside special cards */
+.text-cyan-400, .text-indigo-400, .text-emerald-400, .text-rose-450, .text-rose-400, .text-amber-400 {
+  font-weight: 700 !important;
+}
