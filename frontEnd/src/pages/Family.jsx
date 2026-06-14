@@ -4,6 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Users, Plus, LogIn, LogOut, Copy, Check, Wallet, TrendingUp, BarChart3, Award, Sparkles, User, Settings, MessageSquare, Send, RefreshCw } from "lucide-react";
 import { categoryColors } from "../utils/categoryColors";
 
+import GroupMembershipsTab from "../components/GroupMembershipsTab";
+import GroupBalancesTab from "../components/GroupBalancesTab";
+import GroupExpensesTab from "../components/GroupExpensesTab";
+import CsvImporterTab from "../components/CsvImporterTab";
+
 const AVAILABLE_ICONS = ["👤", "👨‍💻", "👩‍💻", "🦁", "🦊", "🐼", "🐨", "🦄", "🚀", "🍕", "🎸", "🏆", "🌟", "🔥"];
 
 export default function Family() {
@@ -73,7 +78,7 @@ export default function Family() {
         }
 
         try {
-            const expRes = await axios.get(`http://localhost:8080/family/${activeGroupId}/expenses`);
+            const expRes = await axios.get(`http://localhost:8080/family/${activeGroupId}/shared-expenses`);
             setExpenses(expRes.data || []);
             
             const chatRes = await axios.get(`http://localhost:8080/family/${activeGroupId}/chat`);
@@ -574,10 +579,13 @@ export default function Family() {
                     {/* DYNAMIC TABS PANEL */}
                     <div className="backdrop-blur-xl bg-slate-900/60 border border-slate-800 rounded-3xl shadow-xl mt-8 overflow-hidden">
                         {/* Tab Headers */}
-                        <div className="flex border-b border-slate-800 bg-slate-950/40">
+                        <div className="flex flex-wrap border-b border-slate-800 bg-slate-950/40">
                             {[
                                 { id: "dashboard", name: "Spender Rankings", icon: BarChart3 },
-                                { id: "expenses", name: "Shared Logs Ledger", icon: Wallet },
+                                { id: "expenses", name: "Group Split Bills", icon: Wallet },
+                                { id: "balances", name: "Balances & Audit", icon: Wallet },
+                                { id: "memberships", name: "Memberships Timeline", icon: User },
+                                { id: "importer", name: "CSV Importer", icon: MessageSquare },
                                 { id: "chat", name: "Group Chat Board", icon: MessageSquare }
                             ].map(tab => (
                                 <button
@@ -636,73 +644,24 @@ export default function Family() {
                                 </div>
                             )}
 
-                            {/* TAB 2: EXPENSES TABLE */}
+                            {/* TAB 2: EXPENSES COMPONENT */}
                             {activeTab === "expenses" && (
-                                <div className="space-y-4">
-                                    {expenses.length === 0 ? (
-                                        <div className="text-center py-10 bg-slate-900/30 rounded-2xl border border-dashed border-slate-800">
-                                            <p className="text-slate-500 text-sm">No transactions logged in this group yet.</p>
-                                        </div>
-                                    ) : (
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full border-collapse text-left">
-                                                <thead>
-                                                    <tr className="border-b border-slate-800 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                                                        <th className="pb-4">Member</th>
-                                                        <th className="pb-4">Category</th>
-                                                        <th className="pb-4">Date</th>
-                                                        <th className="pb-4">Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y divide-slate-800/40">
-                                                    {expenses.map((exp) => {
-                                                        const member = getMemberDetails(exp.userEmail);
-                                                        const isSelf = exp.userEmail === currentUserEmail;
+                                <GroupExpensesTab groupId={activeGroupId} />
+                            )}
 
-                                                        return (
-                                                            <tr key={exp.id} className="hover:bg-slate-800/20 transition-colors group">
-                                                                <td className="py-4 pr-4">
-                                                                    <div className="flex items-center gap-2.5">
-                                                                        <span className="text-2xl bg-slate-850 p-1 rounded-lg border border-slate-750">
-                                                                            {member.profileIcon || "👤"}
-                                                                        </span>
-                                                                        <div className="flex flex-col">
-                                                                            <span className="font-semibold text-slate-300 text-sm">
-                                                                                {member.email.split('@')[0]}
-                                                                            </span>
-                                                                            <span className="text-[10px] text-slate-500">
-                                                                                {isSelf ? "logged by you" : member.email}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td className="py-4">
-                                                                    <div className="flex items-center gap-2.5">
-                                                                        <div 
-                                                                            className="w-3 h-3 rounded-full" 
-                                                                            style={{ backgroundColor: categoryColors[exp.category] || "#64748b" }} 
-                                                                        />
-                                                                        <span className="font-semibold text-slate-200">
-                                                                            {exp.category}
-                                                                        </span>
-                                                                    </div>
-                                                                </td>
-                                                                <td className="py-4 text-slate-400 text-sm">
-                                                                    {exp.date || "N/A"}
-                                                                </td>
-                                                                <td className="py-4">
-                                                                    <span className={`font-bold text-base px-3 py-1 rounded-lg bg-slate-950/60 border border-slate-800/50 ${exp.type === 'INCOME' ? 'text-emerald-400' : 'text-slate-100'}`}>
-                                                                        {exp.type === 'INCOME' ? '+' : '-'}₹{exp.amount}
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        );
-                                                    })}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    )}
-                                </div>
+                            {/* TAB 3: BALANCES COMPONENT */}
+                            {activeTab === "balances" && (
+                                <GroupBalancesTab groupId={activeGroupId} />
+                            )}
+
+                            {/* TAB 4: MEMBERSHIPS COMPONENT */}
+                            {activeTab === "memberships" && (
+                                <GroupMembershipsTab groupId={activeGroupId} />
+                            )}
+
+                            {/* TAB 5: CSV IMPORTER COMPONENT */}
+                            {activeTab === "importer" && (
+                                <CsvImporterTab groupId={activeGroupId} onImportSuccess={fetchActiveGroupData} />
                             )}
 
                             {/* TAB 3: CHAT BOARD */}
