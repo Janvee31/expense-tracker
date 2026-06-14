@@ -26,6 +26,14 @@ A full-stack, database-backed Shared Expenses App designed to manage shared flat
 
 ---
 
+## Demo Credentials (Quick Testing)
+
+For quick testing without registration, you can use the following pre-created demo account:
+* **Email:** `root@gmail.com`
+* **Password:** `root`
+
+---
+
 ## Tech Stack
 
 * **Backend:** Java 17, Spring Boot 3.3.5, Spring Data JPA, Spring Security, JWT
