@@ -14,14 +14,14 @@ This log documents the AI tools used during development, key prompts, and cases 
 
 #### **Case 1: CSV Splitter Breaking on Quoted Commas**
 * **What the AI generated:** Initially, the CSV parser used a simple `line.split(",")` to extract values.
-* **Why it was wrong:** Roommate splits columns often package comma-separated strings inside double quotes (e.g. `"Rohan, Sam, Meera"` in the Shared With column). A simple comma split broke these rows into 10+ columns, causing index errors.
+* **Why it was wrong:** Roommate splits columns often package comma-separated strings inside double quotes (e.g. multiple email names in the Shared With column). A simple comma split broke these rows into 10+ columns, causing index errors.
 * **How it was fixed:** Upgraded the parsing splitter regex in `CsvImportService.java` to:
   `line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")`
   This ignores commas located inside quote enclosures.
 
 #### **Case 2: Bilateral Group Access Loss on Member Leaving**
 * **What the AI generated:** The leave endpoint removed the user completely from `user.getFamilyGroups()` and deleted the group if empty.
-* **Why it was wrong:** If Meera leaves the group at the end of March, removing her relationship completely from the database means she can no longer log in to view the historical dashboard or approve duplicate merges.
+* **Why it was wrong:** If a member leaves the group, removing their relationship completely from the database means they can no longer log in to view the historical dashboard or approve duplicate merges.
 * **How it was fixed:** Kept the database user linked to the group but introduced a `leftDate` on `GroupMembership`. The leave endpoint simply marks `leftDate = LocalDate.now()` to indicate inactive split participation while retaining historical context.
 
 #### **Case 3: Floating Point Precision Loops in Settlement Minimization**
