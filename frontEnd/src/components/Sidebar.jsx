@@ -9,7 +9,7 @@ export default function Sidebar() {
         { name: "Categories", path: "/categories", icon: Tags },
         { name: "AI Assistant", path: "/chat", icon: Sparkles },
         { name: "Family Group", path: "/family", icon: Users },
-        { name: "Hisab", path: "/hisab", icon: Percent }
+        { name: "Hisab(Split)", path: "/hisab", icon: Percent }
     ];
 
     return (

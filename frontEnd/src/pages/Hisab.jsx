@@ -382,7 +382,7 @@ export default function Hisab() {
             <div className="flex items-center justify-between pb-6 border-b border-slate-800">
                 <div>
                     <h1 className="text-3xl font-black bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent flex items-center gap-2">
-                        Hisab <span className="text-lg text-emerald-500 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full">Split Bills</span>
+                        Hisab(Split) <span className="text-lg text-emerald-500 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full">Split Bills</span>
                     </h1>
                     <p className="text-slate-400 text-sm mt-1">
                         Calculate shared bills with friends and split costs instantly using an optimized transaction path.
