@@ -7,11 +7,11 @@ A full-stack, database-backed Shared Expenses App designed to manage shared flat
 ## Key Features
 
 1. **Secure Login Module:** User registration and JWT-based authentication.
-2. **Membership Timeline History (Sam's Request):** Set and manage member join/leave dates. Balance calculations dynamically check expense dates against active member windows (e.g. Sam is excluded from March utility bills).
-3. **Group Split Bills (Rohan's Request):** Log shared expenses with EQUAL, EXACT, or PERCENT splits. Trace calculations transparently in the Audit ledger to view exactly which splits contribute to a roommate's balance.
-4. **USD Currency Converter (Priya's Request):** Multicurrency support converting USD transactions using a fixed historical trip conversion rate of **₹83/$1**.
-5. **Aisha's Minimized Settlements:** Greedy Cash Flow Minimization algorithm simplifies bilateral debts into the minimum number of transactions (who pays whom, how much).
-6. **Interactive CSV Importer (Meera's Request):** Ingests dirty flat exports without manual editing. Flags **12 deliberate anomalies** (whitespace casing, duplicates, currency mismatches, out-of-membership splits, settlements) in a staging cache. Roommates can edit details or ignore duplicates before committing to the database.
+2. **Membership Timeline History:** Set and manage member join/leave dates. Balance calculations dynamically check expense dates against active member windows (e.g. members are excluded from bills logged before they joined).
+3. **Group Split Bills:** Log shared expenses with EQUAL, EXACT, or PERCENT splits. Trace calculations transparently in the Audit ledger to view exactly which splits contribute to a roommate's balance.
+4. **USD Currency Converter:** Multicurrency support converting USD transactions using a fixed historical trip conversion rate of **₹83/$1**.
+5. **Minimized Settlements:** Greedy Cash Flow Minimization algorithm simplifies bilateral debts into the minimum number of transactions (who pays whom, how much).
+6. **Interactive CSV Importer:** Ingests dirty flat exports without manual editing. Flags **12 deliberate anomalies** (whitespace casing, duplicates, currency mismatches, out-of-membership splits, settlements) in a staging cache. Roommates can edit details or ignore duplicates before committing to the database.
 7. **Import Report Generator:** Generates a downloadable text summary of detected anomalies and resolution actions.
 
 ---
@@ -20,7 +20,7 @@ A full-stack, database-backed Shared Expenses App designed to manage shared flat
 
 * **Backend:** Java 17, Spring Boot 3.3.5, Spring Data JPA, Spring Security, JWT
 * **Database:** MySQL
-* **Frontend:** React 19, Vite, TailwindCSS, Axios, Framer Motion, Lucide Icons
+* **Frontend:** React 19, Vite, TailwindCSS, Axios, Framer Motion, Lucide Icons, Node.js (Runtime & Build tool)
 * **AI Collaborator:** Antigravity (Gemini 3.5 Flash Model)
 
 ---
