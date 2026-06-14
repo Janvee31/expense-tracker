@@ -1,4 +1,4 @@
-# Roommate Shared Expense Tracker Application
+# Expense Tracker Application
 
 A full-stack, database-backed Shared Expenses App designed to manage shared flatmate costs, track membership timelines, parse inconsistent CSV sheets interactively, and optimize payment settlements.
 
