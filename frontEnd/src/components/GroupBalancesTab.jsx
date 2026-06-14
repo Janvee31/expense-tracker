@@ -94,11 +94,11 @@ export default function GroupBalancesTab({ groupId }) {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* AISHA'S ONE-NUMBER VIEW & QUICK SETTLES */}
+            {/* DEBT MINIMIZATION VIEW & QUICK SETTLES */}
             <div className="space-y-6 lg:col-span-2">
                 <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl space-y-4">
                     <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
-                        <span className="text-emerald-400">📊</span> Aisha's Settlement Summary
+                        <span className="text-emerald-400">📊</span> Settlement Summary
                     </h3>
                     <p className="text-xs text-slate-400">
                         Optimized payment paths to settle all debts with the minimum number of transactions.
@@ -132,11 +132,11 @@ export default function GroupBalancesTab({ groupId }) {
                     )}
                 </div>
 
-                {/* ROHAN'S NO MAGIC NUMBERS DETAIL LEDGER */}
+                {/* DETAILED LEDGER */}
                 <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl space-y-4">
                     <div className="flex justify-between items-center">
                         <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
-                            <span className="text-indigo-400">🔍</span> Rohan's Audit Ledgers
+                            <span className="text-indigo-400">🔍</span> Audit Ledgers
                         </h3>
                         <span className="text-[10px] uppercase font-bold text-slate-500">Click a user to audit</span>
                     </div>
@@ -152,7 +152,7 @@ export default function GroupBalancesTab({ groupId }) {
                                         : "bg-slate-950/60 border-slate-850 text-slate-400 hover:text-slate-200"
                                 }`}
                             >
-                                {u.split("@")[0]} (₹{balances[u] >= 0 ? "+" : ""}{balances[u]})
+                                {u.split("@")[0]} (₹{balances[u] >= 0 ? "+" : ""}{balances[u].toFixed(2)})
                             </button>
                         ))}
                     </div>

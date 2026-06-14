@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Plus, Eye, Wallet, TrendingUp, PiggyBank, Trash2, Edit, Search, Filter } from "lucide-react";
+import { Plus, Eye, Wallet, TrendingUp, PiggyBank, Trash2, Edit, Search, Filter, Receipt } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -56,13 +56,13 @@ export default function Expenses() {
 
     useEffect(() => {
         let a = 0, b = 0, c = 0;
-        const step1 = Math.ceil(totalExpenses / 30) || 1;
-        const step2 = Math.ceil(totalIncome / 30) || 1;
+        const step1 = totalExpenses / 30;
+        const step2 = totalIncome / 30;
         
         // Balance might be negative, handle carefully for animation
         const isNeg = currentBalance < 0;
         const absBal = Math.abs(currentBalance);
-        const step3 = Math.ceil(absBal / 30) || 1;
+        const step3 = absBal / 30;
 
         const interval = setInterval(() => {
             a += step1; b += step2; c += step3;
@@ -188,13 +188,20 @@ export default function Expenses() {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 p-2">
             
-            <div className="mb-10">
-                <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                    Transactions
-                </h1>
-                <p className="text-cyan-400 text-lg mt-1 font-medium tracking-wide">
-                    Manage your income & expenses
-                </p>
+            <div className="flex justify-between items-center mb-10 pb-6 border-b border-slate-200">
+                <div className="flex items-center gap-4">
+                    <div className="hidden sm:flex w-12 h-12 bg-emerald-50 rounded-xl items-center justify-center text-emerald-600 border border-emerald-100">
+                        <Receipt size={24} />
+                    </div>
+                    <div>
+                        <h1 className="text-4xl font-extrabold text-black">
+                            Transactions
+                        </h1>
+                        <p className="text-emerald-500 text-sm mt-1 font-semibold tracking-wide">
+                            Manage your personal income and expenses logs
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -206,7 +213,7 @@ export default function Expenses() {
                         </div>
                         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Income</span>
                     </div>
-                    <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">₹{displayIncome}</h2>
+                    <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">₹{Number(displayIncome).toFixed(2)}</h2>
                 </motion.div>
                 
                 <motion.div whileHover={{ y: -5 }} className="relative overflow-hidden backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] group">
@@ -217,7 +224,7 @@ export default function Expenses() {
                         </div>
                         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Expenses</span>
                     </div>
-                    <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">₹{displayTotal}</h2>
+                    <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">₹{Number(displayTotal).toFixed(2)}</h2>
                 </motion.div>
                 
                 <motion.div whileHover={{ y: -5 }} className="relative overflow-hidden backdrop-blur-xl bg-slate-900/50 border border-slate-700/50 p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] group">
@@ -229,7 +236,7 @@ export default function Expenses() {
                         <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Current Balance</span>
                     </div>
                     <h2 className={`text-4xl font-black mt-6 relative z-10 ${displaySavings >= 0 ? "text-slate-100" : "text-red-400"}`}>
-                        ₹{displaySavings}
+                        ₹{Number(displaySavings).toFixed(2)}
                     </h2>
                 </motion.div>
             </div>
@@ -278,7 +285,7 @@ export default function Expenses() {
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <span className={`font-bold text-xl px-4 py-2 rounded-xl border border-slate-700 ${item.type === 'INCOME' ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-100 bg-slate-900/50'}`}>
-                                        {item.type === 'INCOME' ? '+' : '-'}₹{item.amount}
+                                        {item.type === 'INCOME' ? '+' : '-'}₹{Number(item.amount).toFixed(2)}
                                     </span>
                                     <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
                                         <button onClick={() => handleEditClick(item)} className="p-2 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 hover:text-indigo-300 rounded-lg transition-colors">
@@ -497,7 +504,7 @@ export default function Expenses() {
 
                                         <div className="flex items-center gap-4">
                                             <span className={`font-bold text-lg px-3 py-1 rounded-lg border border-slate-700 ${item.type === 'INCOME' ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-100 bg-slate-900/50'}`}>
-                                                {item.type === 'INCOME' ? '+' : '-'}₹{item.amount}
+                                                {item.type === 'INCOME' ? '+' : '-'}₹{Number(item.amount).toFixed(2)}
                                             </span>
 
                                             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

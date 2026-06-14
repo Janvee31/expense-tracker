@@ -287,7 +287,7 @@ export default function GroupExpensesTab({ groupId }) {
                                         <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
                                             isUSD ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
                                         }`}>
-                                            {isUSD ? `USD ($ ${e.totalAmount})` : `INR (₹${e.totalAmount})`}
+                                            {isUSD ? `USD ($ ${Number(e.totalAmount).toFixed(2)})` : `INR (₹${Number(e.totalAmount).toFixed(2)})`}
                                         </span>
                                     </div>
                                     <p className="text-xs text-slate-500 mt-1">

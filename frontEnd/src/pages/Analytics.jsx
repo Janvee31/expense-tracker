@@ -9,6 +9,7 @@ import { categoryColors } from "../utils/categoryColors";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { BarChart3 } from "lucide-react";
 
 export default function Analytics() {
 
@@ -144,20 +145,25 @@ This is a rule-based system (not real AI).`,
         <div className="space-y-8 p-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
             {/* HEADER */}
-            <div className="flex justify-between items-center mb-10">
-                <div>
-                    <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                        Smart Analytics
-                    </h1>
-                    <p className="text-cyan-400 text-lg mt-1 font-medium tracking-wide">
-                        AI powered insights
-                    </p>
+            <div className="flex justify-between items-center mb-10 pb-6 border-b border-slate-200">
+                <div className="flex items-center gap-4">
+                    <div className="hidden sm:flex w-12 h-12 bg-emerald-50 rounded-xl items-center justify-center text-emerald-600 border border-emerald-100">
+                        <BarChart3 size={24} />
+                    </div>
+                    <div>
+                        <h1 className="text-4xl font-extrabold text-black">
+                            Smart Analytics
+                        </h1>
+                        <p className="text-emerald-500 text-sm mt-1 font-semibold tracking-wide">
+                            AI powered insights & spending projections
+                        </p>
+                    </div>
                 </div>
 
                 <select
                     value={month}
                     onChange={(e) => setMonth(Number(e.target.value))}
-                    className="bg-slate-800 border border-slate-700 text-slate-100 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 font-medium cursor-pointer"
+                    className="bg-white border border-slate-200 text-slate-800 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-semibold cursor-pointer"
                 >
                     {months.map((m, i) => (
                         <option key={i} value={i}>{m}</option>

@@ -5,6 +5,12 @@ import axios from "axios";
 
 axios.interceptors.request.use(
     (config) => {
+        // Dynamic URL rewrite for deployment redirect
+        const productionApiUrl = import.meta.env.VITE_API_URL;
+        if (productionApiUrl && config.url && config.url.startsWith("http://localhost:8080")) {
+            config.url = config.url.replace("http://localhost:8080", productionApiUrl);
+        }
+
         const token = localStorage.getItem("token");
         if (token) {
             config.headers = config.headers || {};

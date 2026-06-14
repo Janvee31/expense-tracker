@@ -301,7 +301,7 @@ export default function CsvImporterTab({ groupId, onImportSuccess }) {
                                                         </div>
                                                     ) : (
                                                         <span className="font-bold text-slate-200">
-                                                            {row.currency === "USD" ? "$" : "₹"}{row.totalAmount}
+                                                            {row.currency === "USD" ? "$" : "₹"}{Number(row.totalAmount).toFixed(2)}
                                                         </span>
                                                     )}
                                                 </td>

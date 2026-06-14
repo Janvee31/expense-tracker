@@ -254,30 +254,35 @@ export default function Family() {
     const topSpenderDetails = topSpenderEmail !== "N/A" ? getMemberDetails(topSpenderEmail) : null;
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-10">
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-10 p-2">
             {/* HEADER */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800/60 pb-6">
-                <div>
-                    <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                        Family Track Hub
-                    </h1>
-                    <p className="text-cyan-400 text-sm mt-1 font-medium tracking-wide">
-                        Manage joint expenses and chat in real-time across family circles
-                    </p>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6 mb-8">
+                <div className="flex items-center gap-4">
+                    <div className="hidden sm:flex w-12 h-12 bg-emerald-50 rounded-xl items-center justify-center text-emerald-600 border border-emerald-100">
+                        <Users size={24} />
+                    </div>
+                    <div>
+                        <h1 className="text-4xl font-extrabold text-black">
+                            Family Track Hub
+                        </h1>
+                        <p className="text-emerald-500 text-sm mt-1 font-semibold tracking-wide">
+                            Manage joint expenses and chat in real-time across family circles
+                        </p>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-3">
                     {/* Active Group Selector */}
                     {groups.length > 0 && (
                         <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Group:</span>
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Group:</span>
                             <select
                                 value={activeGroupId || ""}
                                 onChange={(e) => {
                                     setActiveGroupId(Number(e.target.value));
                                     setActiveTab("dashboard");
                                 }}
-                                className="bg-slate-900 border border-slate-750 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 font-bold text-sm"
+                                className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-sm cursor-pointer"
                             >
                                 {groups.map(g => (
                                     <option key={g.id} value={g.id}>{g.name}</option>
@@ -288,7 +293,7 @@ export default function Family() {
 
                     <button
                         onClick={() => setShowFormModal(true)}
-                        className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 hover:border-indigo-500/40 transition-all font-semibold text-xs"
+                        className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 hover:border-emerald-300 transition-all font-bold text-xs"
                     >
                         <Plus size={14} />
                         Join/Create Group
@@ -391,7 +396,7 @@ export default function Family() {
                                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Group Total Spent</span>
                             </div>
                             <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">
-                                ₹{totalSpending}
+                                ₹{Number(totalSpending).toFixed(2)}
                             </h2>
                             <p className="text-slate-400 text-sm mt-2 relative z-10">
                                 Shared spending in {activeGroup?.name}
@@ -411,7 +416,7 @@ export default function Family() {
                                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">This Month</span>
                             </div>
                             <h2 className="text-4xl font-black mt-6 text-slate-100 relative z-10">
-                                ₹{thisMonthSpending}
+                                ₹{Number(thisMonthSpending).toFixed(2)}
                             </h2>
                             <p className="text-slate-400 text-sm mt-2 relative z-10">
                                 Group expenses this month
@@ -438,7 +443,7 @@ export default function Family() {
                                     </span>
                                     <div className="flex flex-col truncate">
                                         <span className="text-lg font-bold text-slate-100 truncate">{topSpenderDetails.email.split('@')[0]}</span>
-                                        <span className="text-xs text-slate-400">Spent: ₹{memberSpendingMap[topSpenderEmail]}</span>
+                                        <span className="text-xs text-slate-400">Spent: ₹{Number(memberSpendingMap[topSpenderEmail] || 0).toFixed(2)}</span>
                                     </div>
                                 </div>
                             ) : (
@@ -559,7 +564,7 @@ export default function Family() {
                                                 </div>
                                                 <span className="text-xs text-slate-500 block truncate">{member.email}</span>
                                                 <div className="mt-2 flex items-center justify-between text-xs">
-                                                    <span className="text-slate-400 font-medium">₹{userSpend} spent</span>
+                                                    <span className="text-slate-400 font-medium">₹{Number(userSpend).toFixed(2)} spent</span>
                                                     <span className="text-slate-500 font-bold">{percentage}%</span>
                                                 </div>
                                                 <div className="w-full bg-slate-950 rounded-full h-1.5 mt-1 border border-slate-850">
@@ -624,7 +629,7 @@ export default function Family() {
                                                                 <span className="text-slate-300">{member.email.split('@')[0]}</span>
                                                             </div>
                                                             <div className="text-right">
-                                                                <span className="text-slate-100">₹{spend}</span>
+                                                                <span className="text-slate-100">₹{Number(spend).toFixed(2)}</span>
                                                                 <span className="text-slate-500 ml-2">({Math.round(percentage)}%)</span>
                                                             </div>
                                                         </div>

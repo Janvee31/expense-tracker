@@ -376,22 +376,28 @@ export default function Hisab() {
     };
 
     return (
-        <div className="p-6 max-w-6xl mx-auto space-y-6 text-slate-100 min-h-screen">
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-10 p-2">
             
             {/* Header */}
-            <div className="flex items-center justify-between pb-6 border-b border-slate-800">
-                <div>
-                    <h1 className="text-3xl font-black bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent flex items-center gap-2">
-                        Hisab(Split) <span className="text-lg text-emerald-500 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full">Split Bills</span>
-                    </h1>
-                    <p className="text-slate-400 text-sm mt-1">
-                        Calculate shared bills with friends and split costs instantly using an optimized transaction path.
-                    </p>
+            <div className="flex justify-between items-center mb-10 pb-6 border-b border-slate-200">
+                <div className="flex items-center gap-4">
+                    <div className="hidden sm:flex w-12 h-12 bg-emerald-50 rounded-xl items-center justify-center text-emerald-600 border border-emerald-100">
+                        <Coins size={24} />
+                    </div>
+                    <div>
+                        <h1 className="text-4xl font-extrabold text-black flex items-center gap-3">
+                            <span>Hisab(Split)</span>
+                            <span className="text-xs text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100 uppercase tracking-wider">Split Bills</span>
+                        </h1>
+                        <p className="text-emerald-500 text-sm mt-1 font-semibold tracking-wide">
+                            Calculate shared bills with friends and split costs instantly using an optimized transaction path
+                        </p>
+                    </div>
                 </div>
                 {!isCreating && !selectedOutingId && (
                     <button
                         onClick={() => setIsCreating(true)}
-                        className="flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 px-5 py-3 rounded-2xl text-slate-900 font-bold shadow-lg shadow-emerald-500/20 hover:scale-102 transition-all"
+                        className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-2xl font-bold transition-all shadow-sm"
                     >
                         <Plus size={18} />
                         New Outing Split
@@ -641,11 +647,11 @@ export default function Hisab() {
                                                     <div>
                                                         <h5 className="font-bold text-sm text-slate-200">{ev.name}</h5>
                                                         <p className="text-xs text-slate-400 mt-1">
-                                                            Paid by: {Object.keys(ev.paidBy).map(k => `${k} (₹${ev.paidBy[k]})`).join(", ")} | Shared by {ev.sharedBy.length} friends
+                                                            Paid by: {Object.keys(ev.paidBy).map(k => `${k} (₹${Number(ev.paidBy[k]).toFixed(2)})`).join(", ")} | Shared by {ev.sharedBy.length} friends
                                                         </p>
                                                     </div>
                                                     <div className="flex items-center gap-4">
-                                                        <span className="font-black text-emerald-400">₹{ev.totalAmount}</span>
+                                                        <span className="font-black text-emerald-400">₹{Number(ev.totalAmount).toFixed(2)}</span>
                                                         <button
                                                             onClick={() => handleRemoveEvent(idx)}
                                                             className="text-slate-500 hover:text-rose-400 transition-all"
@@ -756,7 +762,7 @@ export default function Hisab() {
                                                         <span className="font-bold text-sm text-slate-200">{debt.creditor}</span>
                                                     </div>
                                                     <div className="flex items-center gap-4">
-                                                        <span className="font-black text-rose-400">₹{debt.amount}</span>
+                                                        <span className="font-black text-rose-400">₹{Number(debt.amount).toFixed(2)}</span>
                                                         <button
                                                             onClick={() => handleRemoveDebt(idx)}
                                                             className="text-slate-500 hover:text-rose-400 transition-all"
@@ -1136,7 +1142,7 @@ export default function Hisab() {
                                                     <div className="flex justify-between items-start">
                                                         <span className="font-bold text-sm text-slate-300">{ev.name}</span>
                                                         <div className="flex items-center gap-2">
-                                                            <span className="text-xs font-black text-emerald-400">₹{ev.totalAmount}</span>
+                                                            <span className="text-xs font-black text-emerald-400">₹{Number(ev.totalAmount).toFixed(2)}</span>
                                                             {ev.id && (
                                                                 <button
                                                                     onClick={() => handleDetailDeleteEvent(ev.id)}
@@ -1148,7 +1154,7 @@ export default function Hisab() {
                                                         </div>
                                                     </div>
                                                     <div className="text-[10px] text-slate-500 font-semibold space-y-0.5">
-                                                        <div>Paid by: {Object.keys(ev.paidBy).map(k => `${k} (₹${ev.paidBy[k]})`).join(", ")}</div>
+                                                        <div>Paid by: {Object.keys(ev.paidBy).map(k => `${k} (₹${Number(ev.paidBy[k]).toFixed(2)})`).join(", ")}</div>
                                                         <div>Split among: {ev.sharedBy.join(", ")}</div>
                                                     </div>
                                                 </div>
@@ -1167,7 +1173,7 @@ export default function Hisab() {
                                                             <span className="font-semibold text-slate-300">{d.creditor}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2">
-                                                            <span className="font-black text-rose-400">₹{d.amount}</span>
+                                                            <span className="font-black text-rose-400">₹{Number(d.amount).toFixed(2)}</span>
                                                             {d.id && (
                                                                 <button
                                                                     onClick={() => handleDetailDeleteDebt(d.id)}
