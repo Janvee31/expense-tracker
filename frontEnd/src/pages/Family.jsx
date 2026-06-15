@@ -439,7 +439,7 @@ export default function Family() {
                             {topSpenderDetails ? (
                                 <div className="flex items-center gap-3 mt-6 relative z-10">
                                     <span className="text-3xl bg-slate-850 px-2 py-1.5 rounded-xl border border-slate-750">
-                                        {topSpenderDetails.profileIcon}
+                                        {topSpenderDetails.profileIcon || "👤"}
                                     </span>
                                     <div className="flex flex-col truncate">
                                         <span className="text-lg font-bold text-slate-100 truncate">{topSpenderDetails.email.split('@')[0]}</span>
@@ -625,7 +625,7 @@ export default function Family() {
                                                     <div key={member.email} className="space-y-2">
                                                         <div className="flex justify-between items-center text-sm font-medium">
                                                             <div className="flex items-center gap-2">
-                                                                <span className="text-xl">{member.profileIcon}</span>
+                                                                <span className="text-xl">{member.profileIcon || "👤"}</span>
                                                                 <span className="text-slate-300">{member.email.split('@')[0]}</span>
                                                             </div>
                                                             <div className="text-right">

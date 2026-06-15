@@ -23,7 +23,7 @@ public class User {
     @com.fasterxml.jackson.annotation.JsonIgnore
     private java.util.List<FamilyGroup> familyGroups = new java.util.ArrayList<>();
 
-    private String profileIcon = "👤";
+    private String profileIcon;
 
     public User() {}
 
