@@ -6,7 +6,7 @@ console.log("AI Service initialized with API Key (partial):", process.env.GEMINI
 
 const generateResponse = async (prompt) => {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
         const result = await model.generateContent(prompt);
         const response = await result.response;
         return response.text();
